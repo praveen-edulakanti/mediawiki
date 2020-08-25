@@ -5,6 +5,9 @@ pipeline {
         choice(name: 'Environment', choices: ['QA', 'Staging'], description: 'Select Workspace Environment')
         string(name: 'Branch', defaultValue: 'master', description: 'Enter Branch Name to Run')
     }
+    environment {
+     TF_IN_AUTOMATION      = true
+    }
     stages {
         stage('CleanWorkspace'){
            steps {
