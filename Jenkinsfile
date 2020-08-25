@@ -31,12 +31,7 @@ pipeline {
         stage('Terraform Plan'){ 
            steps {
               sh 'terraform plan -var-file="./env/${Project}-${Environment}.tfvars" -out=${Project}-${Environment}tfplanout'
-              /*script {
-              timeout(time: 10, unit: 'MINUTES') {
-                input(id: "Terraform Apply Gate", message: "Terraform Plan ${params.Environment}tfplanout?", ok: 'Apply')
-              }*/
-            }
-		   }
+               }
         }
         stage('Terraform Apply') { 
             steps {
