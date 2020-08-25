@@ -68,6 +68,8 @@ module "rds" {
   environment          = var.environment
   project              = var.project
   RdsDatabase          = var.dbDetails
+  username             = var.username
+  password             = var.password
   private_subnetID     = module.networking.private_subnet_ids
   PrivateSecurityGrpID = module.security.private_securityGrp
 }

@@ -16,8 +16,8 @@ resource "aws_db_instance" "CreateDatabaseFromRDS" {
   engine_version       = var.RdsDatabase.engine_version
   instance_class       = var.RdsDatabase.instance_class
   name                 = var.RdsDatabase.name
-  username             = var.RdsDatabase.username
-  password             = var.RdsDatabase.password
+  username             = var.username
+  password             = var.password
   parameter_group_name = var.RdsDatabase.parameter_group_name
   skip_final_snapshot = var.RdsDatabase.skip_final_snapshot
   deletion_protection = var.RdsDatabase.deletion_protection
