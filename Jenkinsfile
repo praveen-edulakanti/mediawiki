@@ -5,9 +5,6 @@ pipeline {
         choice(name: 'Environment', choices: ['QA', 'Staging'], description: 'Select Workspace Environment')
         string(name: 'Branch', defaultValue: 'master', description: 'Enter Branch Name to Run')
     }
-    environment {
-     TF_IN_AUTOMATION      = true
-    }
     stages {
         stage('CleanWorkspace'){
            steps {
@@ -31,14 +28,20 @@ pipeline {
             }   
                 
         }    
-        stage('Terraform Plan'){ 
+        stage('Terraform Plan'){
+            environment {
+             username = sh(script: 'echo $TF_VAR_username', , returnStdout: true).trim()
+             password = sh(script: 'echo $TF_VAR_password', , returnStdout: true).trim()
+            }
            steps {
-              sh 'terraform plan -var-file="./env/${Project}-${Environment}.tfvars" -out=${Project}-${Environment}tfplanout'
+              sh 'echo ${username}' 
+              sh 'echo ${password}' 
+              sh 'TF_VAR_username=${username} TF_VAR_password=${password}  terraform plan -var-file="./env/${Project}-${Environment}.tfvars" -out=${Project}-${Environment}tfplanout'
                }
         }
         stage('Terraform Apply') { 
             steps {
-             sh 'terraform apply -auto-approve "${Project}-${Environment}"tfplanout'
+              sh 'terraform apply -auto-approve "${Project}-${Environment}"tfplanout'
             }    
         }
     }    
