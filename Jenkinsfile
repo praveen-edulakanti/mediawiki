@@ -34,8 +34,6 @@ pipeline {
              password = sh(script: 'echo $TF_VAR_password', , returnStdout: true).trim()
             }
            steps {
-              sh 'echo ${username}' 
-              sh 'echo ${password}' 
               sh 'TF_VAR_username=${username} TF_VAR_password=${password}  terraform plan -var-file="./env/${Project}-${Environment}.tfvars" -out=${Project}-${Environment}tfplanout'
                }
         }
