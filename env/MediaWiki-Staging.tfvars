@@ -163,7 +163,7 @@ AlbForwardRules = [
 	}
 ]
 
-Route53zone_id   = "Z03184512L9I1FKCYWYON"
+Route53zone_id   = "Z08679645XSNK2JLJWNR"
 
 DomainAliases = [
   {
