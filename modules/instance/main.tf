@@ -7,7 +7,7 @@ resource "aws_instance" "PublicInstance" {
 	 key_name = lookup(var.PublicInstances[count.index], "key_name")
 	 subnet_id = var.public_subnetID[count.index]
 	 associate_public_ip_address = lookup(var.PublicInstances[count.index], "associate_public_ip_address")
-	 #user_data = file(lookup(var.PublicInstances[count.index], "user_data"))
+	 user_data = file(lookup(var.PublicInstances[count.index], "user_data"))
 	 vpc_security_group_ids = [var.PublicSecurityGrpID]
 	 
 	tags = {
