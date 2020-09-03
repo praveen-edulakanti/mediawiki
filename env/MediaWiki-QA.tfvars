@@ -105,7 +105,7 @@ PublicInstances = [
     instance_type               = "t2.micro"
     key_name                    = "terraform-demo"
     associate_public_ip_address = true
-    #user_data                  = "./modules/user-data/user-data-httpd.sh"
+    user_data                  = "./modules/user-data/user-data-httpd.sh"
   },
   {
     name                        = "MediaWikiDBServer"
