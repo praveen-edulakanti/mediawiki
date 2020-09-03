@@ -3,6 +3,8 @@ pipeline {
     parameters {
         string(name: 'Project', defaultValue: 'MediaWiki', description: 'Deploy project using Terraform')
         choice(name: 'Environment', choices: ['QA', 'Staging'], description: 'Select Workspace Environment')
+        booleanParam (name : 'RUN_PLAN_ONLY', defaultValue: true, description: 'Check Use to Run Terraform Plan Only. Uncheck to Run Apply/Destroy')
+        choice(name: 'TERRAFORM_ACTION', choices: ['apply' , 'destroy'],  description: 'Do You Want to Apply or Destroy?')
         string(name: 'Branch', defaultValue: 'master', description: 'Enter Branch Name to Run')
     }
     stages {
@@ -37,10 +39,21 @@ pipeline {
               sh 'TF_VAR_username=${username} TF_VAR_password=${password}  terraform plan -var-file="./env/${Project}-${Environment}.tfvars" -out=${Project}-${Environment}tfplanout'
                }
         }
-        stage('Terraform Apply') { 
+        stage('Terraform Apply') {
+            when {
+                expression { params.TERRAFORM_ACTION == 'apply' && params.RUN_PLAN_ONLY == false}
+            }
             steps {
               sh 'terraform apply -auto-approve "${Project}-${Environment}"tfplanout'
             }    
         }
-    }    
+        stage('Terraform Destroy') {
+            when {
+                expression { params.TERRAFORM_ACTION == 'destroy' && params.RUN_PLAN_ONLY == false}
+            }
+            steps {
+              sh 'terraform destroy -auto-approve -var-file="./env/${Project}-${Environment}.tfvars"'
+            }    
+        }
+    }
 }
