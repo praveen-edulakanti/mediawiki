@@ -3,7 +3,7 @@ pipeline {
     parameters {
         string(name: 'Project', defaultValue: 'MediaWiki', description: 'Deploy project using Terraform')
         choice(name: 'Environment', choices: ['QA', 'Staging'], description: 'Select Workspace Environment')
-        booleanParam (name : 'RUN_PLAN_ONLY', defaultValue: true, description: 'Check Use to Run Terraform Plan Only. Uncheck to Run Apply/Destroy')
+        booleanParam (name : 'RUN_PLAN_ONLY', defaultValue: true, description: 'Use Checkbox checked to Run Terraform Plan Only. Uncheck Checkbox to Run Terraform Plan with Apply/Destroy Stage.')
         choice(name: 'TERRAFORM_ACTION', choices: ['apply' , 'destroy'],  description: 'Do You Want to Apply or Destroy?')
         string(name: 'Branch', defaultValue: 'master', description: 'Enter Branch Name to Run')
     }
